@@ -2,87 +2,70 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-### Local Development (without Docker)
+### Prerequisites
 
-First, run the development server:
+- **Node.js**: Version 22 (required for Prisma 7 and semantic-release)
+- **Yarn**: Package manager (install with `npm install -g yarn` or `corepack enable`)
+- **PostgreSQL**: Database server (can be local or remote)
+
+This project includes a `.nvmrc` file. If you use [nvm](https://github.com/nvm-sh/nvm), you can automatically use the correct Node.js version:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Install and use the correct Node.js version
+nvm install
+nvm use
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Install dependencies**:
 
-### Docker Compose
+```bash
+yarn install
+```
 
-To run the project with Docker and PostgreSQL:
-
-1. **Create a `.env` file in the project root**:
+2. **Create a `.env` file in the project root**:
 
 ```bash
 # Copy the example environment file
 cp .env.example .env
 ```
 
-The `.env.example` file contains all the necessary environment variables with default values. You can modify the `.env` file if you need to change any values:
+The `.env.example` file contains all the necessary environment variables with default values. Update the `.env` file with your PostgreSQL connection details:
 
 ```env
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=nextjs_saas
-POSTGRES_PORT=5432
-NEXTJS_PORT=3000
-DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nextjs_saas
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/nextjs_saas
 ```
 
-2. **Run Docker Compose (Development mode)**:
-
-The default `docker-compose.yml` is configured for development. It automatically:
-- Checks if dependencies are installed
-- Installs/updates dependencies if needed
-- Mounts your code as a volume for hot-reload
+3. **Generate Prisma Client**:
 
 ```bash
-docker compose up
+yarn db:generate
 ```
 
-Or to run in the background:
+4. **Apply database schema**:
 
 ```bash
-docker compose up -d
+yarn db:push
 ```
 
-3. **Access the application**:
-   - Next.js: http://localhost:3000
-   - PostgreSQL: localhost:5432
-
-**Useful Docker Compose commands:**
+5. **Seed the database (optional)**:
 
 ```bash
-# Stop containers
-docker compose down
-
-# Stop and remove volumes (deletes database data)
-docker compose down -v
-
-# View logs
-docker compose logs -f
-
-# Rebuild after changes
-docker compose up --build
-
-# Run in production mode
-docker compose -f docker-compose.prod.yml up
+yarn db:seed
 ```
 
-**Note:** The development Docker setup automatically verifies and installs npm packages on every container start, ensuring dependencies are always up to date.
+### Local Development
+
+Run the development server:
+
+```bash
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 ## Project Structure
 
@@ -95,20 +78,28 @@ docker compose -f docker-compose.prod.yml up
 
 ```bash
 # Development
-npm run dev          # Start development server
-npm run build        # Create production build
-npm run start        # Start production server
+yarn dev             # Start development server
+yarn build           # Create production build
+yarn start           # Start production server
 
 # Code Quality
-npm run lint         # Run ESLint
-npm run lint:fix     # Run ESLint and fix issues automatically
-npm run type-check   # Check TypeScript types
+yarn lint            # Run ESLint
+yarn lint:fix        # Run ESLint and fix issues automatically
+yarn type-check      # Check TypeScript types
 
 # Testing
-npm run test         # Run tests once
-npm run test:watch   # Run tests in watch mode
-npm run test:ui      # Open Vitest UI
-npm run test:coverage # Run tests with coverage
+yarn test            # Run tests once
+yarn test:watch      # Run tests in watch mode
+yarn test:ui         # Open Vitest UI
+yarn test:coverage   # Run tests with coverage
+
+# Database
+yarn db:generate     # Generate Prisma Client
+yarn db:push         # Push schema changes to database
+yarn db:migrate      # Run database migrations
+yarn db:studio       # Open Prisma Studio
+yarn db:seed         # Seed the database
+yarn db:test         # Test database connection
 ```
 
 ## Testing
@@ -119,13 +110,13 @@ This project uses [Vitest](https://vitest.dev/) for testing. Tests should be wri
 
 ```bash
 # Run all tests
-npm run test
+yarn test
 
 # Run tests in watch mode
-npm run test:watch
+yarn test:watch
 
 # Run tests with coverage
-npm run test:coverage
+yarn test:coverage
 ```
 
 ### Writing Tests
