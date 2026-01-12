@@ -1,3 +1,16 @@
+# [1.3.0](https://github.com/douglas-henrique/next-js-saas-boilerplate/compare/v1.2.0...v1.3.0) (2026-01-12)
+
+
+### Bug Fixes
+
+* lazy initialize Resend to prevent build errors ([da79b9a](https://github.com/douglas-henrique/next-js-saas-boilerplate/commit/da79b9acd2813886c97ebea54f652cff69a77bc9))
+
+
+### Features
+
+* add dashboard with sidebar-16 and authentication protection ([17ebc51](https://github.com/douglas-henrique/next-js-saas-boilerplate/commit/17ebc51ddf02ddf82483f7be249f566b973f10f9))
+* **auth:** implement Better Auth with email/password and OTP ([3b93b4d](https://github.com/douglas-henrique/next-js-saas-boilerplate/commit/3b93b4dff37829542599c1f6f44c98493b088481))
+
 # [1.2.0](https://github.com/douglas-henrique/next-js-saas-boilerplate/compare/v1.1.0...v1.2.0) (2026-01-12)
 
 
