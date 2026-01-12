@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { render, screen } from '@testing-library/react'
 import { LoginForm } from '../login-form'
 import { useRouter } from 'next/navigation'
 
@@ -26,7 +25,7 @@ describe('LoginForm', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    ;(useRouter as any).mockReturnValue(mockRouter)
+    ;(useRouter as ReturnType<typeof vi.fn>).mockReturnValue(mockRouter)
   })
 
   it('should render login form with email and password fields', () => {

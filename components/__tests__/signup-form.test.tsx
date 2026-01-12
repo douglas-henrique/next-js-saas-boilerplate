@@ -26,7 +26,7 @@ describe('SignupForm', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    ;(useRouter as any).mockReturnValue(mockRouter)
+    ;(useRouter as ReturnType<typeof vi.fn>).mockReturnValue(mockRouter)
   })
 
   it('should render signup form with all required fields', () => {

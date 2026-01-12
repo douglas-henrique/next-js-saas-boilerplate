@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { OTPForm } from '../otp-form'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -21,11 +20,11 @@ describe('OTPForm', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    ;(useRouter as any).mockReturnValue(mockRouter)
-    ;(useSearchParams as any).mockReturnValue({
+    ;(useRouter as ReturnType<typeof vi.fn>).mockReturnValue(mockRouter)
+    ;(useSearchParams as ReturnType<typeof vi.fn>).mockReturnValue({
       get: (key: string) => (key === 'email' ? 'test@example.com' : null),
     })
-    ;(global.fetch as any).mockResolvedValue({
+    ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
       ok: true,
       json: async () => ({ success: true }),
     })

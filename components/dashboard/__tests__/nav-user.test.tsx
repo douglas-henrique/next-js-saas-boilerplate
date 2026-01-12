@@ -36,9 +36,9 @@ describe('NavUser', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    ;(useRouter as any).mockReturnValue(mockRouter)
-    ;(useSession as any).mockReturnValue(mockSession)
-    ;(signOut as any).mockResolvedValue(undefined)
+    ;(useRouter as ReturnType<typeof vi.fn>).mockReturnValue(mockRouter)
+    ;(useSession as ReturnType<typeof vi.fn>).mockReturnValue(mockSession)
+    ;(signOut as ReturnType<typeof vi.fn>).mockResolvedValue(undefined)
   })
 
   it('should render user information from session', () => {
@@ -104,7 +104,7 @@ describe('NavUser', () => {
   })
 
   it('should show fallback user data when session is null', () => {
-    ;(useSession as any).mockReturnValue({ data: null })
+    ;(useSession as ReturnType<typeof vi.fn>).mockReturnValue({ data: null })
 
     render(
       <SidebarProvider>

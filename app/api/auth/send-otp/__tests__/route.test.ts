@@ -21,7 +21,7 @@ describe('POST /api/auth/send-otp', () => {
       headers: { 'Content-Type': 'application/json' },
     })
 
-    ;(auth.handler as any).mockResolvedValue(mockResponse)
+    ;(auth.handler as ReturnType<typeof vi.fn>).mockResolvedValue(mockResponse)
 
     const request = new NextRequest('http://localhost:3000/api/auth/send-otp', {
       method: 'POST',
@@ -60,7 +60,7 @@ describe('POST /api/auth/send-otp', () => {
       headers: { 'Content-Type': 'application/json' },
     })
 
-    ;(auth.handler as any).mockResolvedValue(mockResponse)
+    ;(auth.handler as ReturnType<typeof vi.fn>).mockResolvedValue(mockResponse)
 
     const request = new NextRequest('http://localhost:3000/api/auth/send-otp', {
       method: 'POST',
