@@ -5,7 +5,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ### Prerequisites
 
 - **Node.js**: Version 22 (required for Prisma 7 and semantic-release)
-- **npm**: Comes with Node.js
+- **Yarn**: Package manager (install with `npm install -g yarn` or `corepack enable`)
+- **PostgreSQL**: Database server (can be local or remote)
 
 This project includes a `.nvmrc` file. If you use [nvm](https://github.com/nvm-sh/nvm), you can automatically use the correct Node.js version:
 
@@ -15,125 +16,56 @@ nvm install
 nvm use
 ```
 
-### Local Development (without Docker)
+### Setup
 
-First, run the development server:
+1. **Install dependencies**:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-### Docker Compose
-
-To run the project with Docker and PostgreSQL:
-
-1. **Create a `.env` file in the project root**:
+2. **Create a `.env` file in the project root**:
 
 ```bash
 # Copy the example environment file
 cp .env.example .env
 ```
 
-The `.env.example` file contains all the necessary environment variables with default values. You can modify the `.env` file if you need to change any values:
+The `.env.example` file contains all the necessary environment variables with default values. Update the `.env` file with your PostgreSQL connection details:
 
 ```env
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=nextjs_saas
-POSTGRES_PORT=5432
-NEXTJS_PORT=3000
-DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nextjs_saas
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/nextjs_saas
 ```
 
-2. **Run Docker Compose (Development mode)**:
-
-The default `docker-compose.yml` is configured for development. It automatically:
-- Checks if dependencies are installed
-- Installs/updates dependencies if needed
-- Mounts your code as a volume for hot-reload
+3. **Generate Prisma Client**:
 
 ```bash
-docker compose up
+yarn db:generate
 ```
 
-Or to run in the background:
+4. **Apply database schema**:
 
 ```bash
-docker compose up -d
+yarn db:push
 ```
 
-3. **Access the application**:
-   - Next.js: http://localhost:3000
-   - PostgreSQL: localhost:5432
-
-**Useful Docker Compose commands:**
+5. **Seed the database (optional)**:
 
 ```bash
-# Stop containers
-docker compose down
-
-# Stop and remove volumes (deletes database data)
-docker compose down -v
-
-# View logs
-docker compose logs -f
-
-# Rebuild after changes
-docker compose up --build
-
-# Run in production mode
-docker compose -f docker-compose.prod.yml up
+yarn db:seed
 ```
 
-**Note:** The development Docker setup automatically verifies and installs npm packages on every container start, ensuring dependencies are always up to date.
+### Local Development
 
-### Running Commands Inside Docker Container
+Run the development server:
 
-When using Docker, you can execute commands inside the container using `docker compose exec`:
-
-**Direct command execution:**
 ```bash
-# Execute any npm command
-docker compose exec nextjs npm run <command>
-
-# Examples:
-docker compose exec nextjs npm run db:seed
-docker compose exec nextjs npm run db:test
-docker compose exec nextjs npm run lint
-docker compose exec nextjs npm run test
+yarn dev
 ```
 
-**Using convenience scripts (recommended):**
-```bash
-# Database commands
-npm run docker:seed          # Seed the database
-npm run docker:db:test       # Test database connection
-npm run docker:studio        # Open Prisma Studio
-npm run docker:push          # Push schema changes
-npm run docker:generate      # Generate Prisma Client
-npm run docker:migrate       # Run migrations
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-# Development commands
-npm run docker:lint          # Run ESLint
-npm run docker:test          # Run tests
-
-# Interactive shell
-npm run docker:shell         # Open shell inside container
-```
-
-**Important:** 
-- Make sure the containers are running (`docker compose up`) before executing these commands.
-- If you see an error that the container is not running, the scripts will provide helpful instructions to start it.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 ## Project Structure
 
@@ -146,20 +78,28 @@ npm run docker:shell         # Open shell inside container
 
 ```bash
 # Development
-npm run dev          # Start development server
-npm run build        # Create production build
-npm run start        # Start production server
+yarn dev             # Start development server
+yarn build           # Create production build
+yarn start           # Start production server
 
 # Code Quality
-npm run lint         # Run ESLint
-npm run lint:fix     # Run ESLint and fix issues automatically
-npm run type-check   # Check TypeScript types
+yarn lint            # Run ESLint
+yarn lint:fix        # Run ESLint and fix issues automatically
+yarn type-check      # Check TypeScript types
 
 # Testing
-npm run test         # Run tests once
-npm run test:watch   # Run tests in watch mode
-npm run test:ui      # Open Vitest UI
-npm run test:coverage # Run tests with coverage
+yarn test            # Run tests once
+yarn test:watch      # Run tests in watch mode
+yarn test:ui         # Open Vitest UI
+yarn test:coverage   # Run tests with coverage
+
+# Database
+yarn db:generate     # Generate Prisma Client
+yarn db:push         # Push schema changes to database
+yarn db:migrate      # Run database migrations
+yarn db:studio       # Open Prisma Studio
+yarn db:seed         # Seed the database
+yarn db:test         # Test database connection
 ```
 
 ## Testing
@@ -170,13 +110,13 @@ This project uses [Vitest](https://vitest.dev/) for testing. Tests should be wri
 
 ```bash
 # Run all tests
-npm run test
+yarn test
 
 # Run tests in watch mode
-npm run test:watch
+yarn test:watch
 
 # Run tests with coverage
-npm run test:coverage
+yarn test:coverage
 ```
 
 ### Writing Tests
