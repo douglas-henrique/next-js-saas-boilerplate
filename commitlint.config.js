@@ -1,5 +1,9 @@
 module.exports = {
   extends: ['@commitlint/config-conventional'],
+  ignores: [
+    (commit) => commit.includes('[skip ci]'),
+    (commit) => commit.startsWith('chore(release):'),
+  ],
   rules: {
     'type-enum': [
       2,
@@ -23,5 +27,6 @@ module.exports = {
     'subject-full-stop': [2, 'never', '.'],
     'type-case': [2, 'always', 'lower-case'],
     'type-empty': [2, 'never'],
+    'body-max-line-length': [0], // Disable body line length check
   },
 }
