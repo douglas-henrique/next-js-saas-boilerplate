@@ -1,12 +1,12 @@
 #!/bin/sh
 # Helper script to execute commands in Docker container with better error messages
 
-CONTAINER_NAME="nextjs-app"
 SERVICE_NAME="nextjs"
 
-# Check if container is running
-if ! docker ps --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
-  echo "❌ Error: Container '${CONTAINER_NAME}' is not running."
+# Check if service is running using docker compose ps
+if ! docker compose ps --format json 2>/dev/null | grep -q "\"name\":\"${SERVICE_NAME}\"" || \
+   ! docker compose ps --status running --format json 2>/dev/null | grep -q "\"name\":\"${SERVICE_NAME}\""; then
+  echo "❌ Error: Service '${SERVICE_NAME}' is not running."
   echo ""
   echo "Please start the containers first with:"
   echo "  docker compose up"
