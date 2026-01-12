@@ -41,6 +41,7 @@ services:
       - .:/app
       - /app/node_modules
       - /app/.next
+      - /app/app/generated
     depends_on:
       postgres:
         condition: service_healthy

@@ -9,7 +9,7 @@ WORKDIR /app
 # Copiar arquivos de dependências primeiro (para cache do Docker)
 COPY package.json package-lock.json* ./
 
-# Instalar dependências (será executado novamente no CMD se necessário)
+# Instalar dependências
 RUN npm ci || npm install
 
 # Copiar o resto do código
@@ -21,27 +21,9 @@ ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# Script que verifica se node_modules existe e instala dependências se necessário
-CMD ["sh", "-c", "if [ ! -d 'node_modules' ] || [ 'package.json' -nt 'node_modules' ]; then npm ci; fi && npm run dev"]
-
-RUN apk add --no-cache libc6-compat
-
-WORKDIR /app
-
-# Copiar arquivos de dependências
-COPY package.json package-lock.json* ./
-
-# Instalar dependências
-RUN npm ci
-
-# Copiar o resto do código
-COPY . .
-
-EXPOSE 3000
-
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
-ENV NEXT_TELEMETRY_DISABLED 1
-
-# Script para verificar e instalar dependências antes de iniciar
-CMD ["sh", "-c", "npm ci && npm run dev"]
+# Script que:
+# 1. Verifica e instala dependências se necessário
+# 2. Gera o Prisma Client (sempre, para garantir que está atualizado)
+# 3. Aplica as mudanças do schema no banco (db push) - falha silenciosamente se já existir
+# 4. Inicia o servidor de desenvolvimento
+CMD ["sh", "-c", "if [ ! -d 'node_modules' ] || [ 'package.json' -nt 'node_modules' ]; then npm ci; fi && npm run db:generate && (npm run db:push 2>/dev/null || true) && npm run dev"]
