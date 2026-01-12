@@ -22,8 +22,8 @@ ENV HOSTNAME "0.0.0.0"
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # Script que:
-# 1. Verifica e instala dependências se necessário
+# 1. Verifica e instala dependências se necessário (usa npm install se npm ci falhar)
 # 2. Gera o Prisma Client (sempre, para garantir que está atualizado)
 # 3. Aplica as mudanças do schema no banco (db push) - falha silenciosamente se já existir
 # 4. Inicia o servidor de desenvolvimento
-CMD ["sh", "-c", "if [ ! -d 'node_modules' ] || [ 'package.json' -nt 'node_modules' ]; then npm ci; fi && npm run db:generate && (npm run db:push 2>/dev/null || true) && npm run dev"]
+CMD ["sh", "-c", "if [ ! -d 'node_modules' ] || [ 'package.json' -nt 'node_modules' ]; then npm ci || npm install; fi && npm run db:generate && (npm run db:push 2>/dev/null || true) && npm run dev"]
