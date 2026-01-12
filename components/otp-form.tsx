@@ -48,14 +48,14 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
 
     try {
       const baseURL = process.env.NEXT_PUBLIC_BETTER_AUTH_URL || "http://localhost:3000"
-      const response = await fetch(`${baseURL}/api/auth/otp/verify`, {
+      const response = await fetch(`${baseURL}/api/auth/email-otp/verify-email`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email,
-          code: otp,
+          otp: otp,
         }),
       })
 
@@ -85,14 +85,14 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
     setError(null)
 
     try {
-      const baseURL = process.env.NEXT_PUBLIC_BETTER_AUTH_URL || "http://localhost:3000"
-      const response = await fetch(`${baseURL}/api/auth/otp/send`, {
+      const response = await fetch("/api/auth/send-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email,
+          type: "sign-in",
         }),
       })
 

@@ -63,6 +63,23 @@ export function SignupForm({
         return
       }
 
+      // Send OTP email after successful signup (backend handles this)
+      try {
+        await fetch("/api/auth/send-otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            type: "email-verification",
+          }),
+        })
+      } catch (otpError) {
+        console.error("Failed to send OTP email:", otpError)
+        // Continue anyway - user can resend from OTP page
+      }
+
       // OTP is enabled, so redirect to OTP page
       router.push("/otp?email=" + encodeURIComponent(email))
     } catch (err) {

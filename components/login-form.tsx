@@ -47,10 +47,25 @@ export function LoginForm({
         return
       }
 
-      // If OTP is required or session not created, redirect to OTP page
-      // Better Auth with OTP enabled will redirect to OTP page automatically
-      // Check if we need to verify OTP
+      // If OTP is required or session not created, send OTP and redirect to OTP page
       if (!result.data?.user) {
+        // Send OTP email for sign-in (backend handles this)
+        try {
+          await fetch("/api/auth/send-otp", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email,
+              type: "sign-in",
+            }),
+          })
+        } catch (otpError) {
+          console.error("Failed to send OTP email:", otpError)
+          // Continue anyway - user can resend from OTP page
+        }
+
         router.push("/otp?email=" + encodeURIComponent(email))
         return
       }
