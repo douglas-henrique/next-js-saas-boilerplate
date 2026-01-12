@@ -31,6 +31,8 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Generate Prisma Client
+        env:
+          DATABASE_URL: postgresql://user:password@localhost:5432/db
         run: yarn db:generate
 
       - name: Run tests
