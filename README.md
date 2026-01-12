@@ -131,7 +131,9 @@ npm run docker:test          # Run tests
 npm run docker:shell         # Open shell inside container
 ```
 
-**Important:** Make sure the containers are running (`docker compose up`) before executing these commands.
+**Important:** 
+- Make sure the containers are running (`docker compose up`) before executing these commands.
+- If you see an error that the container is not running, the scripts will provide helpful instructions to start it.
 
 ## Project Structure
 
