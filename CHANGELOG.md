@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/douglas-henrique/next-js-saas-boilerplate/compare/v1.0.0...v1.1.0) (2026-01-12)
+
+
+### Features
+
+* add .env.example file and update README with setup instructions ([f7acb75](https://github.com/douglas-henrique/next-js-saas-boilerplate/commit/f7acb75e61d402f593cf1f1a46e4dfffae884cb7))
+
 # 1.0.0 (2026-01-12)
 
 
