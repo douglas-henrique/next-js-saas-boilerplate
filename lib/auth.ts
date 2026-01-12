@@ -4,7 +4,13 @@ import { emailOTP } from "better-auth/plugins"
 import { Resend } from "resend"
 import prisma from "./prisma"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy initialization of Resend to avoid errors during build
+const getResend = () => {
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error("RESEND_API_KEY is not set")
+  }
+  return new Resend(process.env.RESEND_API_KEY)
+}
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -18,6 +24,7 @@ export const auth = betterAuth({
     emailOTP({
       async sendVerificationOTP({ email, otp, type }) {
         try {
+          const resend = getResend()
           await resend.emails.send({
             from: process.env.RESEND_FROM_EMAIL || process.env.RESEND_EMAIL_FROM || "noreply@example.com",
             to: email,
