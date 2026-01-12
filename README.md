@@ -24,7 +24,14 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 To run the project with Docker and PostgreSQL:
 
-1. **Create a `.env` file in the project root** with the following variables (or use the default values):
+1. **Create a `.env` file in the project root**:
+
+```bash
+# Copy the example environment file
+cp .env.example .env
+```
+
+The `.env.example` file contains all the necessary environment variables with default values. You can modify the `.env` file if you need to change any values:
 
 ```env
 POSTGRES_USER=postgres
