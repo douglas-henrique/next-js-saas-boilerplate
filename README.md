@@ -2,6 +2,19 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Prerequisites
+
+- **Node.js**: Version 22 (required for Prisma 7 and semantic-release)
+- **npm**: Comes with Node.js
+
+This project includes a `.nvmrc` file. If you use [nvm](https://github.com/nvm-sh/nvm), you can automatically use the correct Node.js version:
+
+```bash
+# Install and use the correct Node.js version
+nvm install
+nvm use
+```
+
 ### Local Development (without Docker)
 
 First, run the development server:
