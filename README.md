@@ -97,6 +97,42 @@ docker compose -f docker-compose.prod.yml up
 
 **Note:** The development Docker setup automatically verifies and installs npm packages on every container start, ensuring dependencies are always up to date.
 
+### Running Commands Inside Docker Container
+
+When using Docker, you can execute commands inside the container using `docker compose exec`:
+
+**Direct command execution:**
+```bash
+# Execute any npm command
+docker compose exec nextjs npm run <command>
+
+# Examples:
+docker compose exec nextjs npm run db:seed
+docker compose exec nextjs npm run db:test
+docker compose exec nextjs npm run lint
+docker compose exec nextjs npm run test
+```
+
+**Using convenience scripts (recommended):**
+```bash
+# Database commands
+npm run docker:seed          # Seed the database
+npm run docker:db:test       # Test database connection
+npm run docker:studio        # Open Prisma Studio
+npm run docker:push          # Push schema changes
+npm run docker:generate      # Generate Prisma Client
+npm run docker:migrate       # Run migrations
+
+# Development commands
+npm run docker:lint          # Run ESLint
+npm run docker:test          # Run tests
+
+# Interactive shell
+npm run docker:shell         # Open shell inside container
+```
+
+**Important:** Make sure the containers are running (`docker compose up`) before executing these commands.
+
 ## Project Structure
 
 - `app/` - Main Next.js application directory

@@ -20,7 +20,16 @@
     "db:push": "npx prisma db push",
     "db:generate": "npx prisma generate",
     "db:migrate": "npx prisma migrate dev",
-    "db:seed": "npx tsx prisma/seed.ts"
+    "db:seed": "npx tsx prisma/seed.ts",
+    "docker:seed": "docker compose exec nextjs npm run db:seed",
+    "docker:db:test": "docker compose exec nextjs npm run db:test",
+    "docker:studio": "docker compose exec nextjs npm run db:studio",
+    "docker:push": "docker compose exec nextjs npm run db:push",
+    "docker:generate": "docker compose exec nextjs npm run db:generate",
+    "docker:migrate": "docker compose exec nextjs npm run db:migrate",
+    "docker:shell": "docker compose exec nextjs sh",
+    "docker:lint": "docker compose exec nextjs npm run lint",
+    "docker:test": "docker compose exec nextjs npm run test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
