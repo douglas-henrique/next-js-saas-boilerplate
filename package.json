@@ -15,12 +15,12 @@
     "type-check": "tsc --noEmit",
     "release": "semantic-release",
     "prepare": "husky",
-    "db:test": "tsx scripts/test-database.ts",
-    "db:studio": "prisma studio",
-    "db:push": "prisma db push",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:test": "npx tsx scripts/test-database.ts",
+    "db:studio": "npx prisma studio",
+    "db:push": "npx prisma db push",
+    "db:generate": "npx prisma generate",
+    "db:migrate": "npx prisma migrate dev",
+    "db:seed": "npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
