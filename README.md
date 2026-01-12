@@ -35,7 +35,12 @@ NEXTJS_PORT=3000
 DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nextjs_saas
 ```
 
-2. **Run Docker Compose**:
+2. **Run Docker Compose (Development mode)**:
+
+The default `docker-compose.yml` is configured for development. It automatically:
+- Checks if dependencies are installed
+- Installs/updates dependencies if needed
+- Mounts your code as a volume for hot-reload
 
 ```bash
 docker compose up
@@ -65,7 +70,12 @@ docker compose logs -f
 
 # Rebuild after changes
 docker compose up --build
+
+# Run in production mode
+docker compose -f docker-compose.prod.yml up
 ```
+
+**Note:** The development Docker setup automatically verifies and installs npm packages on every container start, ensuring dependencies are always up to date.
 
 ## Project Structure
 

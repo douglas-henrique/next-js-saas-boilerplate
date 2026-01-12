@@ -1,5 +1,5 @@
-# Dockerfile para Next.js
-FROM node:20-alpine AS base
+# Dockerfile para Next.js (Produção)
+FROM node:22-alpine AS base
 
 # Instalar dependências apenas quando necessário
 FROM base AS deps
