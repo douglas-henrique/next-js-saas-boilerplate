@@ -41,7 +41,7 @@ async function main() {
     ])
 
     console.log(`✅ Created ${users.length} users:`)
-    users.forEach((user) => {
+    users.forEach((user: { name: string | null; email: string }) => {
       console.log(`   - ${user.name} (${user.email})`)
     })
 

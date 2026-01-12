@@ -23,7 +23,7 @@ async function testDatabase() {
     console.log("\n📋 Fetching all users...")
     const allUsers = await prisma.user.findMany()
     console.log(`✅ Found ${allUsers.length} user(s):`)
-    allUsers.forEach((user) => {
+    allUsers.forEach((user: { name: string | null; email: string }) => {
       console.log(`   - ${user.name} (${user.email})`)
     })
 
